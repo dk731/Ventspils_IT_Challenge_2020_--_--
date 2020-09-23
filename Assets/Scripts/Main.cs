@@ -17,9 +17,16 @@ public class Main : MonoBehaviour
     public float minStartO2 = 0.9f;
     private float maxStartO2 = 0.998f;
 
+    private Vector2 prevMousePos;
+
+    public float rotationSpeed = 1.0f;
+
+    private Transform rotateAround;
 
     void Start()
     {
+        rotateAround = transform.GetChild(0);
+
         Vector3 spacing = new Vector3();
         spacing.x = roomSize.x / particleAmount.x;
         spacing.y = roomSize.y / particleAmount.y;
@@ -42,10 +49,15 @@ public class Main : MonoBehaviour
                 }
             }
         }
+        prevMousePos = Input.mousePosition;
     }
 
     void Update()
     {
-       
+
+        if (Input.GetAxis("Horizontal") != 0)
+            transform.RotateAround(rotateAround.position, Vector3.up, -Input.GetAxis("Horizontal") * rotationSpeed);
+
+        prevMousePos = Input.mousePosition;
     }
 }

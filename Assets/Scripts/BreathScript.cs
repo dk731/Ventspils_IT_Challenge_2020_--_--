@@ -20,6 +20,10 @@ public class BreathScript : MonoBehaviour
     public int particlesOut = -1;
 
     public float o2absord = 0.1f;
+
+    public float delayBetweenOutParticles = 0.1f;
+
+    private float timeBetweenParticlesOut = 10.0f;
     void OnTriggerEnter(Collider collision)
     {
 
@@ -62,18 +66,28 @@ public class BreathScript : MonoBehaviour
             }
             else if (particlesList.Count > 0 && breathProgress > breathHoldDuration + breathInLength)
             {
-                particlesList[0].transform.position = transform.position + new Vector3(0.0f, 0.0f, -1.0f); 
-                particlesList[0].GetComponent<Rigidbody>().velocity = Vector3.left * breathOutSpeed;
-                particlesList[0].GetComponent<SphereCollider>().enabled = true;
-                ParticleScript tmpPs = particlesList[0].GetComponent<ParticleScript>();
-                tmpPs.SetO2(tmpPs.o2Con - tmpPs.o2Con * o2absord);
+                if (timeBetweenParticlesOut >= delayBetweenOutParticles)
+                {
+                    particlesList[0].transform.position = transform.GetChild(0).transform.position;
+                    particlesList[0].GetComponent<Rigidbody>().velocity = Vector3.left * breathOutSpeed;
+                    particlesList[0].GetComponent<SphereCollider>().enabled = true;
+                    ParticleScript tmpPs = particlesList[0].GetComponent<ParticleScript>();
+                    tmpPs.SetO2(tmpPs.o2Con - tmpPs.o2Con * o2absord);
 
-                particlesList.RemoveAt(0);
+                    particlesList.RemoveAt(0);
+                    timeBetweenParticlesOut = 0;
+                }
+                else
+                {
+                    timeBetweenParticlesOut += Time.deltaTime;
+                }
+                
             }
             else if (particlesList.Count == 0)
             {
                 breathProgress = -1.0f;
                 lastBreaath = 0.0f;
+                timeBetweenParticlesOut = 10.0f;
                 particlesList.Clear();
             }
 
