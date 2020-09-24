@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 1629153966224060585}
   - component: {fileID: 1456203038437848566}
   - component: {fileID: 7980541413694524959}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Particle
   m_TagString: Particle
   m_Icon: {fileID: 0}
@@ -130,3 +130,4 @@ MonoBehaviour:
   o2Con: 0.998
   startAlpha: 0.2
   endAlpha: 0.8
+  myMaterial: {fileID: 0}

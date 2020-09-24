@@ -23,8 +23,21 @@ public class Main : MonoBehaviour
 
     private Transform rotateAround;
 
+    private List<GameObject> particlesList = new List<GameObject>();
+
+    public ChartScript o2Chart;
+    public ChartScript temperatureChart;
+
     void Start()
     {
+        // Charts
+        o2Chart.chartLines[Color.red] = new List<Vector2>();
+        o2Chart.chartLines[Color.blue] = new List<Vector2>();
+
+
+        temperatureChart.chartLines[Color.red] = new List<Vector2>();
+        ///
+
         rotateAround = transform.GetChild(0);
 
         Vector3 spacing = new Vector3();
@@ -46,6 +59,7 @@ public class Main : MonoBehaviour
                     Vector3 randRotation = new Vector3(UnityEngine.Random.value * TWO_PI, UnityEngine.Random.value * TWO_PI, 0);
                     float tmpang = (float)Math.Cos(randRotation.y);
                     tmp.GetComponent<Rigidbody>().velocity = new Vector3(tmpang * (float)Math.Cos(randRotation.x), tmpang * (float)Math.Sin(randRotation.x), (float)Math.Sin(randRotation.y)) * startTemp;
+                    particlesList.Add(tmp);
                 }
             }
         }
@@ -58,6 +72,23 @@ public class Main : MonoBehaviour
         if (Input.GetAxis("Horizontal") != 0)
             transform.RotateAround(rotateAround.position, Vector3.up, -Input.GetAxis("Horizontal") * rotationSpeed);
 
+        float avgO2 = 0;
+        float avgTemp = 0;
+
+        foreach (var p in particlesList)
+        {
+            avgO2 += p.GetComponent<ParticleScript>().o2Con;
+            avgTemp += p.GetComponent<Rigidbody>().velocity.magnitude;
+
+        }
+
+        avgO2 /= (float)particlesList.Count;
+        avgTemp /= (float)particlesList.Count;
+
+        o2Chart.chartLines[Color.red].Add(new Vector2(Time.time, avgO2));
+        o2Chart.chartLines[Color.blue].Add(new Vector2(Time.time, 1 - avgO2));
+
+        temperatureChart.chartLines[Color.red].Add(new Vector2(Time.time, avgTemp));
         prevMousePos = Input.mousePosition;
     }
 }
