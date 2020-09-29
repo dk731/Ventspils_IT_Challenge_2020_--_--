@@ -13,10 +13,10 @@ GameObject:
   - component: {fileID: 2935141407982022198}
   - component: {fileID: 2935141407982022197}
   - component: {fileID: 2935141407982022196}
-  - component: {fileID: 2935141407982022091}
+  - component: {fileID: 7187670745282803308}
   m_Layer: 8
   m_Name: Head 1
-  m_TagString: Untagged
+  m_TagString: Head
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -28,14 +28,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2935141407982022090}
-  m_LocalRotation: {x: -0.43045902, y: -0.56098586, z: -0.56098574, w: 0.430459}
-  m_LocalPosition: {x: 14.536135, y: 7.330003, z: -11.554563}
+  m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 506546163100824019}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: -90, y: 0, z: -105}
+  m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
 --- !u!33 &2935141407982022199
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -113,14 +113,17 @@ MonoBehaviour:
   particlesList: []
   breathInLength: 1
   breathOutLength: 1
-  breathHoldDuration: 0.3
-  breathsDelay: 0.3
-  breathOutSpeed: 10.39
+  breathHoldDuration: 0.1
+  breathsDelay: 0.01
   particlesOut: -1
-  o2absord: 0.5
-  delayBetweenOutParticles: 0.5
---- !u!135 &2935141407982022091
-SphereCollider:
+  o2absord: 0.15
+  delayBetweenOutParticles: 0.1
+  bodyTemp: 2
+  tempExchange: 0.5
+  cycleName: 
+  collisionActiveDistance: 0
+--- !u!136 &7187670745282803308
+CapsuleCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -129,9 +132,10 @@ SphereCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 2.6
-  m_Center: {x: 0, y: 2.6, z: 0}
+  m_Radius: 3
+  m_Height: 0
+  m_Direction: 0
+  m_Center: {x: 0, y: 3, z: 0}
 --- !u!1 &3607599420930399344
 GameObject:
   m_ObjectHideFlags: 0
@@ -156,8 +160,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3607599420930399344}
   m_LocalRotation: {x: 0.7071068, y: -0, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 1.3, z: -0.18}
-  m_LocalScale: {x: 1, y: 0.99999976, z: 0.99999976}
+  m_LocalPosition: {x: 0, y: 1.3, z: 0.01}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 2935141407982022192}
   m_RootOrder: 0

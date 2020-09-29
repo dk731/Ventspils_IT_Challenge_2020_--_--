@@ -38,8 +38,7 @@ public class ButtonFunctions : MonoBehaviour
 
     public void infoEvent()
     {
-        Debug.Log(123);
-        Application.OpenURL("https://www.google.com/");
+        Application.LoadLevel(Application.loadedLevel);
     }
 
     public void parametrsEvent()

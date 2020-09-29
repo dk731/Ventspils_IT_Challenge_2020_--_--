@@ -21,12 +21,12 @@ public class Main : MonoBehaviour
 
     public float rotationSpeed = 1.0f;
 
-    private Transform rotateAround;
-
     private List<GameObject> particlesList = new List<GameObject>();
 
     public ChartScript o2Chart;
     public ChartScript temperatureChart;
+
+    public Transform rotateAround;
 
     void Start()
     {
@@ -34,11 +34,11 @@ public class Main : MonoBehaviour
         o2Chart.chartLines[Color.red] = new List<Vector2>();
         o2Chart.chartLines[Color.blue] = new List<Vector2>();
 
-
         temperatureChart.chartLines[Color.red] = new List<Vector2>();
         ///
 
-        rotateAround = transform.GetChild(0);
+
+        transform.RotateAround(rotateAround.position, Vector3.up, 45);
 
         Vector3 spacing = new Vector3();
         spacing.x = roomSize.x / particleAmount.x;
@@ -81,14 +81,13 @@ public class Main : MonoBehaviour
             avgTemp += p.GetComponent<Rigidbody>().velocity.magnitude;
 
         }
-
+        
         avgO2 /= (float)particlesList.Count;
         avgTemp /= (float)particlesList.Count;
+        o2Chart.chartLines[Color.red].Add(new Vector2(Time.timeSinceLevelLoad, avgO2));
+        o2Chart.chartLines[Color.blue].Add(new Vector2(Time.timeSinceLevelLoad, 1 - avgO2));
 
-        o2Chart.chartLines[Color.red].Add(new Vector2(Time.time, avgO2));
-        o2Chart.chartLines[Color.blue].Add(new Vector2(Time.time, 1 - avgO2));
-
-        temperatureChart.chartLines[Color.red].Add(new Vector2(Time.time, avgTemp));
+        temperatureChart.chartLines[Color.red].Add(new Vector2(Time.timeSinceLevelLoad, avgTemp));
         prevMousePos = Input.mousePosition;
     }
 }

@@ -113,29 +113,25 @@ public class ChartScript : MonoBehaviour
 
     void ClearBorder()
     {
-        for (int y = 0; y < startPoint1.y; y++)
-        {
-            for (int x = 0; x < myTransform.rect.width; x++)
-            {
-                myTexture.SetPixel(x, y, defaultColor);
-                myTexture.SetPixel(x, (int)myTransform.rect.height - y, defaultColor);
-            }
-        }
+
+        Color[] fillColorArray = myTexture.GetPixels();
 
         for (int y = (int)startPoint1.y; y < startPoint.y; y++)
         {
             for (int x = 0; x < startPoint.x; x++)
             {
-                myTexture.SetPixel(x, y, defaultColor);
-                myTexture.SetPixel((int)myTransform.rect.width - x, y, defaultColor);
+                fillColorArray[y * (int)myTransform.rect.width + x] = defaultColor;
+                fillColorArray[y * (int)myTransform.rect.width + x + (int)(startPoint1.x - startPoint.x)] = defaultColor;
             }
         }
+
+        myTexture.SetPixels(fillColorArray);
     }
 
     void Update()
     {
         ClearScreen();
-        float curTime = Time.time;
+        float curTime = Time.timeSinceLevelLoad;
         float startTime = curTime - timeShown < 0 ? 0 : curTime - timeShown;
 
         foreach (var item in chartLines)
@@ -155,6 +151,7 @@ public class ChartScript : MonoBehaviour
             }
 
         }
+        ClearBorder();
         DrawAxis();
         myTexture.Apply();
 
@@ -171,9 +168,9 @@ public class ChartScript : MonoBehaviour
                 {
                     timeShown = 1.0f;
                 }
-                else if (timeShown > Time.time)
+                else if (timeShown > Time.timeSinceLevelLoad)
                 {
-                    timeShown = Time.time;
+                    timeShown = Time.timeSinceLevelLoad;
                 }
             }
         }

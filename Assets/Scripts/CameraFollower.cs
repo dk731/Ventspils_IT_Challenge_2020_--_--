@@ -16,8 +16,18 @@ public class CameraFollower : MonoBehaviour
     private GameObject objToFollow;
 
     public GameObject selectedObj;
+
+    private string followerType;
+
+    public GameObject textHolder;
+
+    public Font infoFont;
+
+    private Dictionary<string, Text> valuesToDisplay = new Dictionary<string, Text>();
+
     void Start()
     {
+        textHolder = transform.GetChild(0).gameObject;
         myRt = GetComponent<RectTransform>();
         myCameraObj = new GameObject();
         myCameraObj.transform.position = Vector3.zero;
@@ -35,6 +45,28 @@ public class CameraFollower : MonoBehaviour
         selectedObj.SetActive(false);
     }
 
+    Text CreateNewText(Vector2 pos, Vector2 size)
+    {
+        GameObject tmp = new GameObject();
+        tmp.AddComponent<RectTransform>();
+        Text returnText = tmp.AddComponent<Text>();
+        tmp.transform.parent = textHolder.transform;
+
+        RectTransform rt = tmp.GetComponent<RectTransform>();
+
+        pos.x += size.x / 2.0f;
+        pos.y -= size.y / 2.0f;
+
+        rt.sizeDelta = size;
+        rt.localPosition = pos;
+
+        returnText.font = infoFont;
+        returnText.color = Color.black;
+        returnText.text = "default text";
+
+        return returnText;
+    }
+
     // Update is called once per frame
     void Update()
     {
@@ -43,8 +75,11 @@ public class CameraFollower : MonoBehaviour
         {
             RaycastHit hit;
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            if (Physics.Raycast(ray, out hit, 100.0f) && hit.collider.gameObject.tag == "Particle")
+            if (Physics.Raycast(ray, out hit, 100.0f, LayerMask.GetMask("Clickable")))
             {
+                foreach (Transform obj in textHolder.transform)
+                    Destroy(obj.gameObject);
+
                 objToFollow = hit.collider.gameObject;
 
                 selectedObj.transform.parent = objToFollow.transform;
@@ -52,15 +87,47 @@ public class CameraFollower : MonoBehaviour
                 selectedObj.SetActive(true);
                 myCameraObj.transform.parent = objToFollow.transform;
                 myCameraObj.transform.localPosition = Vector3.zero;
+                followerType = hit.collider.gameObject.tag;
+
+                valuesToDisplay.Clear();
+                if (followerType == "Head")
+                {
+                    valuesToDisplay["Temperature"] = CreateNewText(new Vector2(0, 0), new Vector2(300, 30));
+                    valuesToDisplay["Oxygencon"] = CreateNewText(new Vector2(0, -50), new Vector2(300, 30));
+                    valuesToDisplay["Cycle"] = CreateNewText(new Vector2(0, -100), new Vector2(300, 30));
+                }
+                else if (followerType == "Particle")
+                {
+                    valuesToDisplay["Temperature"] = CreateNewText(new Vector2(0, 0), new Vector2(300, 30));
+                    valuesToDisplay["Oxygencon"] = CreateNewText(new Vector2(0, -50), new Vector2(300, 30));
+                    valuesToDisplay["CO2con"] = CreateNewText(new Vector2(0, -100), new Vector2(300, 30));
+                }
             }
         }
 
         if (objToFollow)
         {
+            if (followerType == "Head")
+            {
+                myCameraObj.transform.LookAt(objToFollow.transform.GetChild(0).transform.position);
+                BreathScript tmps = objToFollow.GetComponent<BreathScript>();
+                valuesToDisplay["Temperature"].text = "Body Temperature: " + tmps.bodyTemp * 18.3f + " C*";
+                valuesToDisplay["Oxygencon"].text = "Oxygen level: " + "|||now dont know!|||";
+                valuesToDisplay["Cycle"].text = "Breath Cycle: " + tmps.cycleName;
+            }
+            else if (followerType == "Particle")
+            {
+                myCameraObj.transform.LookAt(objToFollow.GetComponent<Rigidbody>().velocity + myCameraObj.transform.position);
+                ParticleScript tmps = objToFollow.GetComponent<ParticleScript>();
+                valuesToDisplay["Temperature"].text = "Particle velocity: " + objToFollow.GetComponent<Rigidbody>().velocity.magnitude + " m/s";
+                valuesToDisplay["Oxygencon"].text = "Oxygen level: " + tmps.o2Con * 100f + "%";
+                valuesToDisplay["CO2con"].text = "CO2 level: " + (1 - tmps.o2Con) * 100f + "%";
 
-            myCameraObj.transform.LookAt(objToFollow.GetComponent<Rigidbody>().velocity + myCameraObj.transform.position);
+            }
 
-            myCamera.Render();
+
+
+
         }
 
     }
