@@ -20,7 +20,7 @@ public class WindowsScript : MonoBehaviour
 
         tmpr.velocity += tmpr.velocity.normalized * (tempDelta * heatExchange);
         Debug.Log(tmpp.o2Con + "   " + oxygendelta * oxygenExchange);
-        tmpp.o2Con += oxygendelta * oxygenExchange;
+        tmpp.SetO2(tmpp.o2Con + oxygendelta * oxygenExchange);
         
     }
 }
