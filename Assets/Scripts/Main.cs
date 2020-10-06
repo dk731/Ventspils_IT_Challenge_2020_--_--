@@ -28,6 +28,12 @@ public class Main : MonoBehaviour
 
     public Transform rotateAround;
 
+    private void Awake()
+    {
+        startTemp = InitialValues.startParticleTemp;
+        minStartO2 = InitialValues.o2Con;
+    }
+
     void Start()
     {
         // Charts

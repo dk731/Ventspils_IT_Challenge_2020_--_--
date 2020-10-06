@@ -113,13 +113,14 @@ public class BreathScript : MonoBehaviour
                 {
                     Physics.IgnoreCollision(GetComponent<SphereCollider>(), particlesList[index].GetComponent<SphereCollider>(), true);
                     particlesList[index].SetActive(true);
-                    particlesList[index].GetComponent<Rigidbody>().velocity = relativePos * (bodyTemp + (breathDict[particlesList[index]]["startTemp"] - bodyTemp) * tempExchange);
+                    particlesList[index].GetComponent<Rigidbody>().velocity = relativePos * (breathDict[particlesList[index]]["startTemp"] - (breathDict[particlesList[index]]["startTemp"] - bodyTemp) * tempExchange);
                     //Debug.Log((bodyTemp + (breathDict[particlesList[index]]["startTemp"] - bodyTemp) * tempExchange) + "    " + breathDict[particlesList[index]]["startTemp"]);
                     particlesList[index].GetComponent<SphereCollider>().enabled = true;
                     ParticleScript tmpPs = particlesList[index].GetComponent<ParticleScript>();
                     tmpPs.SetO2(tmpPs.o2Con - tmpPs.o2Con * o2absord);
                     timeBetweenParticlesOut = 0;
                     index++;
+                    
                 }
                 else
                 {

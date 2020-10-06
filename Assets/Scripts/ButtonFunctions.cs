@@ -36,7 +36,7 @@ public class ButtonFunctions : MonoBehaviour
         runnign = !runnign;
     }
 
-    public void infoEvent()
+    public static void infoEvent()
     {
         Application.LoadLevel(Application.loadedLevel);
     }
