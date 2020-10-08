@@ -45,7 +45,7 @@ GameObject:
   - component: {fileID: 7929109249594602313}
   - component: {fileID: 7929109249594602326}
   m_Layer: 8
-  m_Name: Head 1
+  m_Name: Head
   m_TagString: Head
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -146,7 +146,7 @@ MonoBehaviour:
   breathHoldDuration: 0.1
   breathsDelay: 0.01
   particlesOut: -1
-  o2absord: 0.15
+  o2absord: 0.21
   delayBetweenOutParticles: 0.5
   bodyTemp: 2
   tempExchange: 0.1

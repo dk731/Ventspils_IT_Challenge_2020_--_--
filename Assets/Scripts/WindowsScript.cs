@@ -19,7 +19,6 @@ public class WindowsScript : MonoBehaviour
         float oxygendelta = outsideOxygen - tmpp.o2Con;
 
         tmpr.velocity += tmpr.velocity.normalized * (tempDelta * heatExchange);
-        Debug.Log(tmpp.o2Con + "   " + oxygendelta * oxygenExchange);
         tmpp.SetO2(tmpp.o2Con + oxygendelta * oxygenExchange);
         
     }

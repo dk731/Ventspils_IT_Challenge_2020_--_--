@@ -28,6 +28,9 @@ public class Main : MonoBehaviour
 
     public Transform rotateAround;
 
+    public bool isVentilated;
+    public float ventilationIntence;
+
     private void Awake()
     {
         startTemp = InitialValues.startParticleTemp;
