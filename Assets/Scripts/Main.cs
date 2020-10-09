@@ -86,6 +86,11 @@ public class Main : MonoBehaviour
 
         foreach (var p in particlesList)
         {
+            ParticleScript ps = p.GetComponent<ParticleScript>();
+
+            if (isVentilated)
+                ps.SetO2(ps.o2Con + (ventilationIntence * Time.deltaTime));
+
             avgO2 += p.GetComponent<ParticleScript>().o2Con;
             avgTemp += p.GetComponent<Rigidbody>().velocity.magnitude;
 

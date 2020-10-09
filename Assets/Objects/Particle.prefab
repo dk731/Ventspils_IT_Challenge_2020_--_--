@@ -129,5 +129,5 @@ MonoBehaviour:
   minO2: 0.6
   o2Con: 0.998
   startAlpha: 0.2
-  endAlpha: 0.8
+  endAlpha: 0.6
   myMaterial: {fileID: 0}

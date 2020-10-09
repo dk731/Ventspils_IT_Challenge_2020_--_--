@@ -5,17 +5,18 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
+
 public class MenuButtonsEvents : MonoBehaviour
 {
 
     public void InfoEvent()
     {
-        if (EditorUtility.DisplayDialog("You've Clicked Information Button!",
+        /*if (EditorUtility.DisplayDialog("You've Clicked Information Button!",
             " If you click \"Go!\", You will be automaticly redirected to webpage that contains all information about this project. \n\n  If you want to oppen it manualy you can copy link: \nhttps://cloudjoy29.wixsite.com/website",
             "Go!",
             "Cancel")
-        )
-            Application.OpenURL("https://cloudjoy29.wixsite.com/website");
+        )*/
+        UnityEngine.Application.OpenURL("https://cloudjoy29.wixsite.com/website");
     }
 
     public void StartSimulationEvent()
