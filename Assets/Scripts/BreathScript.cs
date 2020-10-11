@@ -42,6 +42,7 @@ public class BreathScript : MonoBehaviour
     private void Start()
     {
         relativePos = (transform.GetChild(0).position - transform.position).normalized;
+        bodyTemp = InitialValues.startHeadTemp;
     }
 
     void OnTriggerEnter(Collider collision)
@@ -93,6 +94,7 @@ public class BreathScript : MonoBehaviour
             firstTime = true;
             index = 0;
             timeBetweenParticlesOut = 10.0f;
+            cycleName = "Inhale";
         }
 
         if (breathProgress >= 0.0f)
@@ -107,6 +109,7 @@ public class BreathScript : MonoBehaviour
                 {
                     firstTime = false;
                     particlesList.ForEach(p => p.SetActive(false));
+                    cycleName = "Exhalation";
                 }
                     
                 if (timeBetweenParticlesOut >= delayBetweenOutParticles)

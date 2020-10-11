@@ -26,6 +26,8 @@ public class MenuButtonsEvents : MonoBehaviour
         InitialValues.startHeadTemp = GameObject.Find("BodyTemp").GetComponent<Slider>().value;
         InitialValues.headsAmount = (int)GameObject.Find("AmountOfHeads").GetComponent<Slider>().value;
         InitialValues.outsideTemp = GameObject.Find("OutsideTemp").GetComponent<Slider>().value;
+        InitialValues.radiatorTemp = GameObject.Find("RadiatorTemp").GetComponent<Slider>().value;
+
 
         SceneManager.UnloadScene(0);
         SceneManager.LoadScene(1);

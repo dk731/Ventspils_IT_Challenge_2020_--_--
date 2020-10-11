@@ -5,10 +5,16 @@ using UnityEngine;
 public class RadiatorScript : MonoBehaviour
 {
 
-    public float heatMult;
+    public float temperature;
+
+    void Start()
+    {
+        temperature = InitialValues.radiatorTemp;
+    }
 
     private void OnCollisionExit(Collision collision)
     {
-        collision.gameObject.GetComponent<Rigidbody>().velocity *= heatMult;
+        Vector3 tmp = collision.gameObject.GetComponent<Rigidbody>().velocity;
+        collision.gameObject.GetComponent<Rigidbody>().velocity = tmp.normalized * (temperature - tmp.magnitude) * 0.5f;
     }
 }

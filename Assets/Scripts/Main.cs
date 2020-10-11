@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using UnityEngine.UI;
+
 public class Main : MonoBehaviour
 {
     private const float TWO_PI = 6.283185f;
@@ -31,6 +33,9 @@ public class Main : MonoBehaviour
     public bool isVentilated;
     public float ventilationIntence;
 
+    public Text o2ConText;
+    public Text tempText;
+
     private void Awake()
     {
         startTemp = InitialValues.startParticleTemp;
@@ -40,8 +45,8 @@ public class Main : MonoBehaviour
     void Start()
     {
         // Charts
-        o2Chart.chartLines[Color.red] = new List<Vector2>();
         o2Chart.chartLines[Color.blue] = new List<Vector2>();
+        o2Chart.chartLines[Color.red] = new List<Vector2>();
 
         temperatureChart.chartLines[Color.red] = new List<Vector2>();
         ///
@@ -98,8 +103,12 @@ public class Main : MonoBehaviour
         
         avgO2 /= (float)particlesList.Count;
         avgTemp /= (float)particlesList.Count;
-        o2Chart.chartLines[Color.red].Add(new Vector2(Time.timeSinceLevelLoad, avgO2));
-        o2Chart.chartLines[Color.blue].Add(new Vector2(Time.timeSinceLevelLoad, 1 - avgO2));
+
+        o2ConText.text = (avgO2 * 100f).ToString("0.00") + " %";
+        tempText.text = (avgTemp * 13.3333f).ToString("0.00") + " C°";
+
+        o2Chart.chartLines[Color.blue].Add(new Vector2(Time.timeSinceLevelLoad, avgO2));
+        o2Chart.chartLines[Color.red].Add(new Vector2(Time.timeSinceLevelLoad, 1 - avgO2));
 
         temperatureChart.chartLines[Color.red].Add(new Vector2(Time.timeSinceLevelLoad, avgTemp));
         prevMousePos = Input.mousePosition;

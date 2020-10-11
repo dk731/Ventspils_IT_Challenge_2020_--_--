@@ -11,6 +11,11 @@ public class WindowsScript : MonoBehaviour
 
     public float oxygenExchange;
 
+    void Start()
+    {
+        outsideTemp = InitialValues.outsideTemp;
+    }
+
     private void OnCollisionExit(Collision collision)
     {
         Rigidbody tmpr = collision.gameObject.GetComponent<Rigidbody>();

@@ -9,4 +9,6 @@ public class InitialValues : MonoBehaviour
     public static float o2Con;
     public static int headsAmount;
     public static float outsideTemp;
+    public static float radiatorTemp;
+
 }

@@ -24,6 +24,8 @@ public class ParticleScript : MonoBehaviour
     {
 
         o2Con = o2 > maxO2 ? maxO2 : o2;
+        o2Con = o2Con < minO2 ? minO2 : o2Con;
+
         float koef = (o2Con - minO2) / (maxO2 - minO2);
         myRigidBody = GetComponent<Rigidbody>();
         myMaterial.color = new Color(1.0f - koef, 0.0f, koef, endAlpha - (endAlpha - startAlpha) * koef);

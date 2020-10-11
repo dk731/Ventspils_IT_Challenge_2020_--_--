@@ -93,8 +93,7 @@ public class CameraFollower : MonoBehaviour
                 if (followerType == "Head")
                 {
                     valuesToDisplay["Temperature"] = CreateNewText(new Vector2(0, 0), new Vector2(300, 30));
-                    valuesToDisplay["Oxygencon"] = CreateNewText(new Vector2(0, -50), new Vector2(300, 30));
-                    valuesToDisplay["Cycle"] = CreateNewText(new Vector2(0, -100), new Vector2(300, 30));
+                    valuesToDisplay["Cycle"] = CreateNewText(new Vector2(0, -50), new Vector2(300, 30));
                 }
                 else if (followerType == "Particle")
                 {
@@ -111,8 +110,7 @@ public class CameraFollower : MonoBehaviour
             {
                 myCameraObj.transform.LookAt(objToFollow.transform.GetChild(0).transform.position);
                 BreathScript tmps = objToFollow.GetComponent<BreathScript>();
-                valuesToDisplay["Temperature"].text = "Body Temperature: " + tmps.bodyTemp * 18.3f + " C*";
-                valuesToDisplay["Oxygencon"].text = "Oxygen level: " + "|||now dont know!|||";
+                valuesToDisplay["Temperature"].text = "Body Temperature: " + tmps.bodyTemp * 13.3333f + " C°";
                 valuesToDisplay["Cycle"].text = "Breath Cycle: " + tmps.cycleName;
             }
             else if (followerType == "Particle")

@@ -108,4 +108,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab926e352f72eae4497ce132e9516782, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  heatMult: 0.15
+  heatMult: 0.5
