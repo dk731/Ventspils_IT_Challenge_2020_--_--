@@ -15,12 +15,12 @@ public class BreathScript : MonoBehaviour
     public float breathHoldDuration = 2.0f;
     public float breathsDelay = 0.3f;
 
-    private float lastBreaath = -3.0f;
+    private float lastBreaath;
     private float breathProgress = -1.0f;
 
     public int particlesOut = -1;
 
-    public float o2absord = 0.1f;
+    public float o2absord;
 
     public float delayBetweenOutParticles = 0.1f;
 
@@ -39,10 +39,16 @@ public class BreathScript : MonoBehaviour
 
     private Vector3 relativePos;
 
+    private float avgO2Absorbed = 0;
+
+    public float breathEfficenty;
+    private float maxAbsorb;
     private void Start()
     {
         relativePos = (transform.GetChild(0).position - transform.position).normalized;
         bodyTemp = InitialValues.startHeadTemp;
+        maxAbsorb = 0.998f * o2absord;
+        lastBreaath = -Random.value * 5.0f;
     }
 
     void OnTriggerEnter(Collider collision)
@@ -95,6 +101,7 @@ public class BreathScript : MonoBehaviour
             index = 0;
             timeBetweenParticlesOut = 10.0f;
             cycleName = "Inhale";
+            avgO2Absorbed = 0;
         }
 
         if (breathProgress >= 0.0f)
@@ -120,7 +127,8 @@ public class BreathScript : MonoBehaviour
                     //Debug.Log((bodyTemp + (breathDict[particlesList[index]]["startTemp"] - bodyTemp) * tempExchange) + "    " + breathDict[particlesList[index]]["startTemp"]);
                     particlesList[index].GetComponent<SphereCollider>().enabled = true;
                     ParticleScript tmpPs = particlesList[index].GetComponent<ParticleScript>();
-                    tmpPs.SetO2(tmpPs.o2Con - tmpPs.o2Con * o2absord);
+                    avgO2Absorbed += (tmpPs.o2Con - tmpPs.minO2) *o2absord;
+                    tmpPs.SetO2(tmpPs.o2Con - (tmpPs.o2Con - tmpPs.minO2) * o2absord);
                     timeBetweenParticlesOut = 0;
                     index++;
                     
@@ -134,9 +142,12 @@ public class BreathScript : MonoBehaviour
             else if (particlesList.Count == index)
             {
                 unCollidables = new List<GameObject>(particlesList);
+                avgO2Absorbed /= particlesList.Count;
+                breathEfficenty = avgO2Absorbed / maxAbsorb;
                 particlesList.Clear();
                 breathProgress = -1000.0f;
                 lastBreaath = 0.0f;
+                
             }
            
             breathProgress += Time.deltaTime;

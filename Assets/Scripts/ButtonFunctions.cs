@@ -8,9 +8,13 @@ public class ButtonFunctions : MonoBehaviour
 {
     private bool runnign = true;
     private bool ventilationRunning = false;
+    public static bool windowRunning = true;
+    public static bool radiatorRunning = true;
 
     public Image pauseButton;
     public Image ventilationButton;
+    public Image widnowButton;
+    public Image radiatorButton;
 
     public Sprite pauseSprite;
     public Sprite startSprite;
@@ -18,6 +22,8 @@ public class ButtonFunctions : MonoBehaviour
     public Sprite startVentilation;
     public Sprite stopVentilation;
 
+    public Sprite onSprite;
+    public Sprite offSprite;
 
     public GameObject menuPanel;
 
@@ -28,6 +34,9 @@ public class ButtonFunctions : MonoBehaviour
     public Main mainScript;
 
     public Material ventilationIndicator;
+
+    public Material windowMatertial;
+    public Material radiatorMaterial;
 
     public void startStopEvent()
     {
@@ -96,5 +105,21 @@ public class ButtonFunctions : MonoBehaviour
     public void ventilationSliderOnChange()
     {
         mainScript.ventilationIntence = ventilationSlider.value;
+    }
+
+    public void widowBtnClick()
+    {
+        windowRunning = !windowRunning;
+        widnowButton.sprite = windowRunning ? offSprite : onSprite;
+
+        windowMatertial.color = windowRunning ? new Color(windowMatertial.color.r, windowMatertial.color.g, windowMatertial.color.b, 0.2f) : new Color(windowMatertial.color.r, windowMatertial.color.g, windowMatertial.color.b, 0.0f);
+    }
+
+    public void radiatorBtnClick()
+    {
+        radiatorRunning = !radiatorRunning;
+        radiatorButton.sprite = radiatorRunning ? offSprite : onSprite;
+
+        radiatorMaterial.color = radiatorRunning ? new Color(radiatorMaterial.color.r, radiatorMaterial.color.g, radiatorMaterial.color.b, 0.2f) : new Color(radiatorMaterial.color.r, radiatorMaterial.color.g, radiatorMaterial.color.b, 0.0f);
     }
 }

@@ -14,7 +14,11 @@ public class RadiatorScript : MonoBehaviour
 
     private void OnCollisionExit(Collision collision)
     {
-        Vector3 tmp = collision.gameObject.GetComponent<Rigidbody>().velocity;
-        collision.gameObject.GetComponent<Rigidbody>().velocity = tmp.normalized * (temperature - tmp.magnitude) * 0.5f;
+        if (ButtonFunctions.radiatorRunning)
+        {
+            Vector3 tmp = collision.gameObject.GetComponent<Rigidbody>().velocity;
+            collision.gameObject.GetComponent<Rigidbody>().velocity = tmp.normalized * (temperature - tmp.magnitude) * 0.5f;
+        }
+        
     }
 }

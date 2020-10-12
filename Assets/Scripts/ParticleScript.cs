@@ -6,7 +6,7 @@ using System;
 public class ParticleScript : MonoBehaviour
 {
     public float maxO2 = 0.998f;
-    public float minO2 = 0.6f;
+    public float minO2 = 0.2f;
 
     public float o2Con = 0.0f;
 

@@ -18,13 +18,17 @@ public class WindowsScript : MonoBehaviour
 
     private void OnCollisionExit(Collision collision)
     {
-        Rigidbody tmpr = collision.gameObject.GetComponent<Rigidbody>();
-        ParticleScript tmpp = collision.gameObject.GetComponent<ParticleScript>();
-        float tempDelta = outsideTemp - tmpr.velocity.magnitude;
-        float oxygendelta = outsideOxygen - tmpp.o2Con;
+        if (ButtonFunctions.windowRunning)
+        {
+            Rigidbody tmpr = collision.gameObject.GetComponent<Rigidbody>();
+            ParticleScript tmpp = collision.gameObject.GetComponent<ParticleScript>();
+            float tempDelta = outsideTemp - tmpr.velocity.magnitude;
+            float oxygendelta = outsideOxygen - tmpp.o2Con;
 
-        tmpr.velocity += tmpr.velocity.normalized * (tempDelta * heatExchange);
-        tmpp.SetO2(tmpp.o2Con + oxygendelta * oxygenExchange);
+            tmpr.velocity += tmpr.velocity.normalized * (tempDelta * heatExchange);
+            tmpp.SetO2(tmpp.o2Con + oxygendelta * oxygenExchange);
+        }
+        
         
     }
 }

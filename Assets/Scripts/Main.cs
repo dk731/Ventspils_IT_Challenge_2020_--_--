@@ -36,11 +36,30 @@ public class Main : MonoBehaviour
     public Text o2ConText;
     public Text tempText;
 
+    public GameObject headObj;
+
     private void Awake()
     {
         startTemp = InitialValues.startParticleTemp;
         minStartO2 = InitialValues.o2Con;
     }
+
+
+    public static float Remap(float from, float fromMin, float fromMax, float toMin, float toMax)
+    {
+        float fromAbs = from - fromMin;
+        float fromMaxAbs = fromMax - fromMin;
+
+        float normal = fromAbs / fromMaxAbs;
+
+        float toMaxAbs = toMax - toMin;
+        float toAbs = toMaxAbs * normal;
+
+        float to = toAbs + toMin;
+
+        return to;
+    }
+
 
     void Start()
     {
@@ -78,6 +97,25 @@ public class Main : MonoBehaviour
             }
         }
         prevMousePos = Input.mousePosition;
+
+        Vector3 firsteHeadpos = new Vector3(34, 7, -6);
+        Vector3 headOffset = new Vector3(-9, 0, -6);
+        int count = 0;
+        for (int x = 0; x < 4; x++)
+        {
+            for (int z = 0; z < 4; z++)
+            {
+
+                GameObject tmp = Instantiate(headObj);
+
+                tmp.transform.position = firsteHeadpos + new Vector3(headOffset.x * x, UnityEngine.Random.value * 2 - 1, headOffset.z * z);
+
+                count++;
+                if (count >= InitialValues.headsAmount)
+                    return;
+            }
+        }
+
     }
 
     void Update()
@@ -105,7 +143,7 @@ public class Main : MonoBehaviour
         avgTemp /= (float)particlesList.Count;
 
         o2ConText.text = (avgO2 * 100f).ToString("0.00") + " %";
-        tempText.text = (avgTemp * 13.3333f).ToString("0.00") + " C°";
+        tempText.text = (avgTemp * 10f).ToString("0.00") + " C°";
 
         o2Chart.chartLines[Color.blue].Add(new Vector2(Time.timeSinceLevelLoad, avgO2));
         o2Chart.chartLines[Color.red].Add(new Vector2(Time.timeSinceLevelLoad, 1 - avgO2));

@@ -94,6 +94,7 @@ public class CameraFollower : MonoBehaviour
                 {
                     valuesToDisplay["Temperature"] = CreateNewText(new Vector2(0, 0), new Vector2(300, 30));
                     valuesToDisplay["Cycle"] = CreateNewText(new Vector2(0, -50), new Vector2(300, 30));
+                    //valuesToDisplay["Breath Efficiency"] = CreateNewText(new Vector2(0, -100), new Vector2(300, 30));
                 }
                 else if (followerType == "Particle")
                 {
@@ -110,14 +111,15 @@ public class CameraFollower : MonoBehaviour
             {
                 myCameraObj.transform.LookAt(objToFollow.transform.GetChild(0).transform.position);
                 BreathScript tmps = objToFollow.GetComponent<BreathScript>();
-                valuesToDisplay["Temperature"].text = "Body Temperature: " + tmps.bodyTemp * 13.3333f + " C°";
+                valuesToDisplay["Temperature"].text = "Body Temperature: " + tmps.bodyTemp * 10.0f + " C°";
                 valuesToDisplay["Cycle"].text = "Breath Cycle: " + tmps.cycleName;
+                //valuesToDisplay["Breath Efficiency"].text = (tmps.breathEfficenty * 100.0f).ToString("0.00") + " %";
             }
             else if (followerType == "Particle")
             {
                 myCameraObj.transform.LookAt(objToFollow.GetComponent<Rigidbody>().velocity + myCameraObj.transform.position);
                 ParticleScript tmps = objToFollow.GetComponent<ParticleScript>();
-                valuesToDisplay["Temperature"].text = "Particle velocity: " + objToFollow.GetComponent<Rigidbody>().velocity.magnitude + " m/s";
+                valuesToDisplay["Temperature"].text = "Particle Temperature: " + objToFollow.GetComponent<Rigidbody>().velocity.magnitude * 10.0f + " C°";
                 valuesToDisplay["Oxygencon"].text = "Oxygen level: " + tmps.o2Con * 100f + "%";
                 valuesToDisplay["CO2con"].text = "CO2 level: " + (1 - tmps.o2Con) * 100f + "%";
 
