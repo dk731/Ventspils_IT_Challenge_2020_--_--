@@ -146,7 +146,7 @@ MonoBehaviour:
   breathHoldDuration: 0.1
   breathsDelay: 0.01
   particlesOut: -1
-  o2absord: 0.4
+  o2absord: 0.6
   delayBetweenOutParticles: 0.3
   bodyTemp: 2
   tempExchange: 0.3
